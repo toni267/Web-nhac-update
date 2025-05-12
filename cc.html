@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Music Player</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: white;
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .player {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 15px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    input[type="file"] {
+      margin-top: 15px;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="player">
+    <h1>🎵 Simple Music Player</h1>
+    <p id="songName">No song loaded</p>
+    <audio id="audioPlayer" controls style="display: none;"></audio>
+    <br>
+    <button onclick="togglePlay()">▶️ Play / ⏸️ Pause</button>
+    <br>
+    <input type="file" id="fileInput" accept="audio/*">
+  </div>
+
+  <script>
+    const audio = document.getElementById('audioPlayer');
+    const fileInput = document.getElementById('fileInput');
+    const songName = document.getElementById('songName');
+
+    function togglePlay() {
+      if (!audio.src) {
+        alert("Please select a song file first.");
+        return;
+      }
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    }
+
+    fileInput.addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const url = URL.createObjectURL(file);
+        audio.src = url;
+        audio.style.display = 'block';
+        songName.textContent = file.name;
+        audio.play();
+      }
+    });
+  </script>
+</body>
+</html>
